@@ -68,4 +68,18 @@ public class Bank {
   public void addAccount (Account account) {
     this.bankAccounts.add(account);
   }
+
+  public Client addClient (String firstName, String lastName, String pin) {
+    //Creating the Client using its personal informations
+    Client newClient = new Client(firstName, lastName, pin, this);
+    this.bankClients.add(newClient);
+
+    //Creating the Client's Savings Account
+    Account newAccount = new Account("Savings", newClient, this);
+    newClient.addAccount(newAccount);
+    this.addAccount(newAccount);
+
+    return newClient;
+  }
+
 }

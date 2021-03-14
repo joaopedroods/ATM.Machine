@@ -1,11 +1,19 @@
 package ATMMachine;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Transactions {
 
   private double amount;
-  private LocalDate timeStamp;
+  private Date timeStamp;
   private Account inAccount;
+
+  public Transactions (double amount, Account inAccount) {
+    this.amount = amount;
+    this.inAccount = inAccount;
+    this.timeStamp = new Date();
+  }
+
+
 
 }
