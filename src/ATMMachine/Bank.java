@@ -82,4 +82,15 @@ public class Bank {
     return newClient;
   }
 
+  public  Client clientLogin (String userID, String pin) {
+    //Seacrhing through the Cliente ArrayList to check
+    //if we can find the correct userID
+    for (Client c : this.bankClients) {
+      if (c.getUUID().compareTo(userID) == 0 && c.validatePin(pin)) {
+        return c;
+      }
+    }
+    return null;
+  }
+
 }

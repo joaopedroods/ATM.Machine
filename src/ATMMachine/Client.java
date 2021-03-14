@@ -41,4 +41,16 @@ public class Client {
     return this.uuid;
   }
 
+  public boolean validatePin (String pin) {
+    try {
+      MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+      return MessageDigest.isEqual(messageDigest.digest(pin.getBytes()), this.pinHash);
+    } catch (NoSuchAlgorithmException e) {
+      System.err.println("Error! Caught NoSuchAlgorithmException");
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return false;
+  }
+
 }
