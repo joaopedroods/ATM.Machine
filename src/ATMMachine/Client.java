@@ -53,4 +53,16 @@ public class Client {
     return false;
   }
 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void printAccountsSummary() {
+    System.out.printf("\n\n%s's accounts summary", this.firstName);
+
+    for (int a = 0; a < this.clientAccounts.size(); a++) {
+      System.out.printf("%d - %s\n", this.clientAccounts.get(a).getSummaryLine());
+    }
+    System.out.println();
+  }
 }

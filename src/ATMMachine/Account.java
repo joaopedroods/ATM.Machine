@@ -20,4 +20,23 @@ public class Account {
     return this.accountUuid;
   }
 
+  public String getSummaryLine() {
+    //Getting the Account's balance
+    double balance = this.getBalance();
+
+    //Formatting the summary line for negative balance
+    if (balance >= 0) {
+      return String.format("%s - $%.2f - %s", this.accountUuid, balance, this.accountType);
+    } else {
+      return String.format("%s - $(%.2f) - %s", this.accountUuid, balance, this.accountType);
+    }
+  }
+
+  public double getBalance() {
+    double balance = 0;
+    for (Transactions t : this.accountTransactions) {
+      balance += t.getAmount();
+    }
+    return balance;
+  }
 }

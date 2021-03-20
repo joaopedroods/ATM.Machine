@@ -99,4 +99,7 @@ public class Bank {
     return null;
   }
 
+  public String getBankName() {
+    return bankName;
+  }
 }
