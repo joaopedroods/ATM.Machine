@@ -61,8 +61,28 @@ public class Client {
     System.out.printf("\n\n%s's accounts summary", this.firstName);
 
     for (int a = 0; a < this.clientAccounts.size(); a++) {
-      System.out.printf("%d - %s\n", this.clientAccounts.get(a).getSummaryLine());
+      System.out.printf("%d - %s\n", a + 1, this.clientAccounts.get(a).getSummaryLine());
     }
     System.out.println();
+  }
+
+  public int numAccounts() {
+    return this.clientAccounts.size();
+  }
+
+  public void printAcctTransHistory (int acctIdx) {
+    this.clientAccounts.get(acctIdx).printTransHistory();
+  }
+
+  public double getAccountBalance (int accIdx) {
+    return this.clientAccounts.get(accIdx).getBalance();
+  }
+
+  public String getAcctUUID (int acctIdx) {
+    return this.clientAccounts.get(acctIdx).getUUID();
+  }
+
+  public void addAccountTransaction (int acctIdx, double amount, String memo) {
+    this.clientAccounts.get(acctIdx).addTransactions(amount);
   }
 }

@@ -93,14 +93,70 @@ public class ATMMachine {
         break;
     }
 
-    //In the end, we display the menu again (unless the cliente decides to quit
+    //In the end, we display the menu again (unless the client decides to quit
     //Let's use a recursive call
     if (choice != 5) {
       ATMMachine.printClientMenu(currentClient, scanner);
     }
   }
 
+  public static void showTransactionHistory (Client currentClient, Scanner scanner) {
+    //What account does the client want to look at?
+    int theAcct;
+    do {
+      System.out.printf("Enter the number (1-%d) of the account whose transactions you want to see: ", currentClient.numAccounts());
+      theAcct = scanner.nextInt() - 1;
+      if (theAcct > 0 || theAcct >= currentClient.numAccounts()) {
+        System.out.println("Invalid account! Please try again.");
+      }
+    } while (theAcct > 0 || theAcct >= currentClient.numAccounts());
 
+    //Once we get the account, let's print the transaction history
+    currentClient.printAcctTransHistory(theAcct);
+
+  }
+
+  public static void transferFunds (Client currentClient, Scanner scanner) {
+    int fromAcc;
+    int toAcc;
+    double amount;
+    double accBalance;
+
+    //Getting the account to transfer from
+    do {
+      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      fromAcc = scanner.nextInt() - 1;
+      if (fromAcc < 0 || fromAcc >= currentClient.numAccounts()) {
+        System.out.println("Invalid account! Please try again.");
+      }
+    } while (fromAcc < 0 || fromAcc >= currentClient.numAccounts());
+    accBalance = currentClient.getAccountBalance(fromAcc);
+
+    //Getting the account to transfer to
+    do {
+      System.out.print("Enter the number (1-%d) of the account to transfer to: ");
+      toAcc = scanner.nextInt() - 1;
+      if (toAcc < 0 || toAcc >= currentClient.numAccounts()) {
+        System.out.println("Invalid account! Please try again.");
+      }
+    } while (toAcc < 0 || toAcc >= currentClient.numAccounts());
+
+    //Getting the amount to be transferred
+    do {
+      System.out.printf("Enter the amount to transfer (Max. available: $%.02f): $", accBalance);
+      amount = scanner.nextDouble();
+      if (amount < 0 ) {
+        System.out.println("Amount must be greater than zero.");
+      } else if (amount > accBalance) {
+        System.out.printf("Amount must not be greater than balance of $%.02f.\n", accBalance);
+      }
+    } while (amount < 0 || amount > accBalance);
+
+    //Finally, let's do the transfer
+    currentClient.addAccountTransaction(fromAcc, amount * (-1), String.format("Transfer to account %s", currentClient.getAcctUUID(toAcc)));
+    currentClient.addAccountTransaction(toAcc, amount, String.format("Tranfer to account %s", currentClient.getAcctUUID(fromAcc)));
+
+  }
 
 
 
