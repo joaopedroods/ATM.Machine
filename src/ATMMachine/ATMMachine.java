@@ -36,7 +36,7 @@ public class ATMMachine {
 
     //Prompt the client for client ID/pin combo until a correct one is reached
     do {
-      System.out.printf("\n\n Welcome to %s\n\n", theBank.getBankName());
+      System.out.printf("\nWelcome to %s\n\n", theBank.getBankName());
 
       System.out.print("Enter user ID: ");
       userID = scanner.nextLine();
@@ -59,7 +59,7 @@ public class ATMMachine {
     int choice;
     //User menu
     do {
-      System.out.printf("Welcome, %s. What would you like to do next?", currentClient.getFirstName());
+      System.out.printf("Welcome, %s. What would you like to do next?\n", currentClient.getFirstName());
       System.out.println("1 - Show account transaction history");
       System.out.println("2 - Withdrawl money");
       System.out.println("3 - Make a deposit");
@@ -124,7 +124,7 @@ public class ATMMachine {
 
     //Getting the account to transfer from
     do {
-      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      System.out.printf("Enter the number (1-%d) of the account to transfer from: ", currentClient.numAccounts());
       fromAcc = scanner.nextInt() - 1;
       if (fromAcc < 0 || fromAcc >= currentClient.numAccounts()) {
         System.out.println("Invalid account! Please try again.");
@@ -166,7 +166,7 @@ public class ATMMachine {
 
     //Getting the account to transfer from
     do {
-      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      System.out.printf("Enter the number (1-%d) of the account to withdraw from: ", currentClient.numAccounts());
       fromAcc = scanner.nextInt() - 1;
       if (fromAcc < 0 || fromAcc >= currentClient.numAccounts()) {
         System.out.println("Invalid account! Please try again.");
@@ -201,9 +201,9 @@ public class ATMMachine {
     double accBalance;
     String memo;
 
-    //Getting the account to transfer from
+    //Getting the account to deposit in
     do {
-      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      System.out.printf("Enter the number (1-%d) of the account to deposit in: ", currentClient.numAccounts());
       toAcc = scanner.nextInt() - 1;
       if (toAcc < 0 || toAcc >= currentClient.numAccounts()) {
         System.out.println("Invalid account! Please try again.");
@@ -217,10 +217,8 @@ public class ATMMachine {
       amount = scanner.nextDouble();
       if (amount < 0 ) {
         System.out.println("Amount must be greater than zero.");
-      } else if (amount > accBalance) {
-        System.out.printf("Amount must not be greater than balance of $%.02f.\n", accBalance);
       }
-    } while (amount < 0 || amount > accBalance);
+    } while (amount < 0);
 
     scanner.nextLine();
 

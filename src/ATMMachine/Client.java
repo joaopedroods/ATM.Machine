@@ -58,7 +58,7 @@ public class Client {
   }
 
   public void printAccountsSummary() {
-    System.out.printf("\n\n%s's accounts summary", this.firstName);
+    System.out.printf("\n\n%s's accounts summary:\n", this.firstName);
 
     for (int a = 0; a < this.clientAccounts.size(); a++) {
       System.out.printf("%d - %s\n", a + 1, this.clientAccounts.get(a).getSummaryLine());
