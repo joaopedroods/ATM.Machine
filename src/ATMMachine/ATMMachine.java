@@ -81,7 +81,7 @@ public class ATMMachine {
         break;
 
       case 2:
-        ATMMachine.withdrawlFunds(currentClient, scanner);
+        ATMMachine.withdrawFunds(currentClient, scanner);
         break;
 
       case 3:
@@ -158,16 +158,77 @@ public class ATMMachine {
 
   }
 
+  public static void withdrawFunds (Client currentClient, Scanner scanner) {
+    int fromAcc;
+    double amount;
+    double accBalance;
+    String memo;
 
+    //Getting the account to transfer from
+    do {
+      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      fromAcc = scanner.nextInt() - 1;
+      if (fromAcc < 0 || fromAcc >= currentClient.numAccounts()) {
+        System.out.println("Invalid account! Please try again.");
+      }
+    } while (fromAcc < 0 || fromAcc >= currentClient.numAccounts());
+    accBalance = currentClient.getAccountBalance(fromAcc);
 
+    //Getting the amount to be transferred
+    do {
+      System.out.printf("Enter the amount to transfer (Max. available: $%.02f): $", accBalance);
+      amount = scanner.nextDouble();
+      if (amount < 0 ) {
+        System.out.println("Amount must be greater than zero.");
+      } else if (amount > accBalance) {
+        System.out.printf("Amount must not be greater than balance of $%.02f.\n", accBalance);
+      }
+    } while (amount < 0 || amount > accBalance);
 
+    scanner.nextLine();
 
+    //Memo
+    System.out.println("Enter a memo: ");
+    memo = scanner.nextLine();
 
+    //Now we do the withdraw
+    currentClient.addAccountTransaction(fromAcc, accBalance * (-1), memo);
+  }
 
+  public static void depositFunds (Client currentClient, Scanner scanner) {
+    int toAcc;
+    double amount;
+    double accBalance;
+    String memo;
 
+    //Getting the account to transfer from
+    do {
+      System.out.print("Enter the number (1-%d) of the account to transfer from: ");
+      toAcc = scanner.nextInt() - 1;
+      if (toAcc < 0 || toAcc >= currentClient.numAccounts()) {
+        System.out.println("Invalid account! Please try again.");
+      }
+    } while (toAcc < 0 || toAcc >= currentClient.numAccounts());
+    accBalance = currentClient.getAccountBalance(toAcc);
 
+    //Getting the amount to be transferred
+    do {
+      System.out.printf("Enter the amount to transfer (Max. available: $%.02f): $", accBalance);
+      amount = scanner.nextDouble();
+      if (amount < 0 ) {
+        System.out.println("Amount must be greater than zero.");
+      } else if (amount > accBalance) {
+        System.out.printf("Amount must not be greater than balance of $%.02f.\n", accBalance);
+      }
+    } while (amount < 0 || amount > accBalance);
 
+    scanner.nextLine();
 
+    //Memo
+    System.out.println("Enter a memo: ");
+    memo = scanner.nextLine();
 
-
+    //Now we do the withdraw
+    currentClient.addAccountTransaction(toAcc, accBalance, memo);
+  }
 }
